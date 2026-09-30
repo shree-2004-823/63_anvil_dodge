@@ -75,9 +75,20 @@ Right now, anvils spawn at a constant interval of 700ms throughout the entire ru
   * **Minimum Cap:** `max(200, ...)` guarantees the spawn delay never drops below `200ms`.
   * **Reset:** Pressing `R` after Game Over resets `spawn_delay` back to `700ms` and `survival_time` to `0s`.
 
-### Task 3: Implement speed-based anvil tinting
+### Task 3: Implement speed-based anvil tinting [COMPLETED]
 
 All falling anvils currently share identical shades of grey. In anvil.render(), introduce dynamic color tinting based on each anvil's randomized falling speed (self.speed). Fast-falling anvils should render with an orange or red accent, warning the player of rapid hazards.
+
+* **Implementation Details:** In `game/anvil.py`, updated `Anvil.render()` to dynamically calculate color tint based on `self.speed` (`4.5` to `7.0` range):
+  ```python
+  t = max(0.0, min(1.0, (self.speed - 4.5) / (7.0 - 4.5)))
+  top_color = (int(120 + t * (235 - 120)), int(120 + t * (90 - 120)), int(130 + t * (40 - 130)))
+  base_color = (int(80 + t * (180 - 80)), int(80 + t * (50 - 80)), int(90 + t * (20 - 90)))
+  border_color = (int(200 + t * (255 - 200)), int(200 + t * (150 - 200)), int(210 + t * (100 - 210)))
+  ```
+* **Visual Appearance:**
+  * **Slow Anvils (`speed = 4.5`):** Standard cool grey (`120, 120, 130`).
+  * **Fast Anvils (`speed = 7.0`):** Vibrant warning orange/red accent (`235, 90, 40`).
 
 ### Task 4: Implement ground impact effects
 
