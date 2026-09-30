@@ -6,7 +6,25 @@
 
 ---
 
-## 1. Initial Repository Analysis
+## Pair Programming Workflow Pipeline
+
+```mermaid
+flowchart TD
+    A["Repository Analysis"] --> B["Task 1 Prompt"]
+    B --> C["Task 1 Implementation"]
+    C --> D["Task 1 Testing"]
+    D --> E["Task 2 Prompt"]
+    E --> F["Task 2 Implementation & Testing"]
+    F --> G["Task 3 Prompt"]
+    G --> H["Task 3 Implementation & Testing"]
+    H --> I["Task 4 Prompt"]
+    I --> J["Task 4 Implementation & Testing"]
+    J --> K["Git Commits & Push to Remote"]
+```
+
+---
+
+## 1. Repository Analysis
 
 ### User Request:
 > Analyze this repository WITHOUT modifying any files.
@@ -158,4 +176,5 @@ All tasks were incrementally verified, documented in `README.md`, and pushed to 
 3. `33ef567` - `Implement Task 3: Speed-based anvil tinting and update README`
 4. `d243b14` - `Implement Task 4: Ground impact particle effects and update README`
 5. `6246928` - `Add .gitignore for python cache files`
-6. `CHAT_HISTORY.md` - Full chat history log added to repository.
+6. `bd91246` - `Add CHAT_HISTORY.md conversation log and update README submission checklist`
+7. `CHAT_HISTORY.md` - Full workflow diagram & chat history log added to repository.
