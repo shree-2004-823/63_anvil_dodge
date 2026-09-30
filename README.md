@@ -57,9 +57,23 @@ The player is supposed to stay inside the visible left and right boundaries of t
   ```
   This ensures `self.x` is strictly bounded between `0` (left screen boundary) and `self.screen_width - self.width` (right screen boundary, accounting for the player's 44px width), keeping the player sprite fully visible and within hazard range at all times.
 
-### Task 2: Implement dynamic difficulty scaling
+### Task 2: Implement dynamic difficulty scaling [COMPLETED]
 
 Right now, anvils spawn at a constant interval of 700ms throughout the entire run. Implement logic in game_engine.update() to decrease spawn_delay as survival_time increases (for example, reducing the delay gradually down to a minimum cap of 200ms), making the game progressively more challenging over time.
+
+* **Implementation Details:** In `game/game_engine.py`, updated `GameEngine.update()` to dynamically adjust `spawn_delay` based on `survival_time`, and updated `GameEngine.reset()` to restore initial difficulty:
+  ```python
+  # inside GameEngine.update()
+  self.spawn_delay = max(200, 700 - (self.survival_time * 10))
+
+  # inside GameEngine.reset()
+  self.spawn_delay = 700
+  ```
+* **Behavior:**
+  * **Initial Delay:** Starts at `700ms`.
+  * **Scaling Formula:** `spawn_delay` decreases by `10ms` for every `1s` survived.
+  * **Minimum Cap:** `max(200, ...)` guarantees the spawn delay never drops below `200ms`.
+  * **Reset:** Pressing `R` after Game Over resets `spawn_delay` back to `700ms` and `survival_time` to `0s`.
 
 ### Task 3: Implement speed-based anvil tinting
 

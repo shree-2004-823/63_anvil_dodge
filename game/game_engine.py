@@ -39,6 +39,7 @@ class GameEngine:
         self.player.update()
 
         self.survival_time = (pygame.time.get_ticks() - self.start_ticks) // 1000
+        self.spawn_delay = max(200, 700 - (self.survival_time * 10))
 
         now = pygame.time.get_ticks()
         if now - self.last_spawn_time >= self.spawn_delay:
@@ -58,6 +59,7 @@ class GameEngine:
     def reset(self):
         self.player = Player(self.width, self.height)
         self.anvils.clear()
+        self.spawn_delay = 700
         self.start_ticks = pygame.time.get_ticks()
         self.last_spawn_time = pygame.time.get_ticks()
         self.survival_time = 0
