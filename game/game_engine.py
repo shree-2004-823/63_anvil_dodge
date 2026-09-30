@@ -1,6 +1,30 @@
+import random
 import pygame
 from game.player import Player
 from game.anvil import Anvil
+
+
+class GroundParticle:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.vx = random.uniform(-2.5, 2.5)
+        self.vy = random.uniform(-2.0, -0.5)
+        self.radius = random.uniform(3, 5)
+        self.color = random.choice([(190, 180, 160), (160, 150, 130), (210, 130, 60), (220, 200, 170)])
+        self.lifetime = random.randint(10, 16)
+        self.max_lifetime = self.lifetime
+
+    def update(self):
+        self.x += self.vx
+        self.y += self.vy
+        self.vy += 0.1
+        self.lifetime -= 1
+
+    def render(self, surface):
+        if self.lifetime > 0:
+            current_radius = max(1, int(self.radius * (self.lifetime / self.max_lifetime)))
+            pygame.draw.circle(surface, self.color, (int(self.x), int(self.y)), current_radius)
 
 
 class GameEngine:
@@ -9,6 +33,7 @@ class GameEngine:
         self.height = height
         self.player = Player(width, height)
         self.anvils = []
+        self.particles = []
 
         self.spawn_delay = 700
         self.last_spawn_time = pygame.time.get_ticks()
@@ -38,6 +63,12 @@ class GameEngine:
 
         self.player.update()
 
+        # Update ground impact particles
+        for particle in self.particles[:]:
+            particle.update()
+            if particle.lifetime <= 0:
+                self.particles.remove(particle)
+
         self.survival_time = (pygame.time.get_ticks() - self.start_ticks) // 1000
         self.spawn_delay = max(200, 700 - (self.survival_time * 10))
 
@@ -46,6 +77,7 @@ class GameEngine:
             self.anvils.append(Anvil(self.width))
             self.last_spawn_time = now
 
+        ground_y = self.height - 20
         player_rect = self.player.rect
         for anvil in self.anvils[:]:
             anvil.update()
@@ -54,11 +86,16 @@ class GameEngine:
                 self.game_state = "GAME_OVER"
 
             if anvil.is_off_screen(self.height):
+                # Spawn dust puff impact particles before removing anvil
+                impact_x = anvil.x + anvil.width // 2
+                for _ in range(8):
+                    self.particles.append(GroundParticle(impact_x, ground_y))
                 self.anvils.remove(anvil)
 
     def reset(self):
         self.player = Player(self.width, self.height)
         self.anvils.clear()
+        self.particles.clear()
         self.spawn_delay = 700
         self.start_ticks = pygame.time.get_ticks()
         self.last_spawn_time = pygame.time.get_ticks()
@@ -75,6 +112,9 @@ class GameEngine:
         self.player.render(screen)
         for anvil in self.anvils:
             anvil.render(screen)
+
+        for particle in self.particles:
+            particle.render(screen)
 
         time_surf = self.font_medium.render(f"Survival Time: {self.survival_time}s", True, (240, 240, 240))
         screen.blit(time_surf, (20, 20))

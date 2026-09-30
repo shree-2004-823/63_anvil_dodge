@@ -90,9 +90,22 @@ All falling anvils currently share identical shades of grey. In anvil.render(), 
   * **Slow Anvils (`speed = 4.5`):** Standard cool grey (`120, 120, 130`).
   * **Fast Anvils (`speed = 7.0`):** Vibrant warning orange/red accent (`235, 90, 40`).
 
-### Task 4: Implement ground impact effects
+### Task 4: Implement ground impact effects [COMPLETED]
 
 When an anvil leaves the bottom of the screen, it is silently removed from the game. Add a brief visual effect—such as a small dust puff, ground particles, or screen-shake vibration—whenever an anvil strikes the ground before being removed.
+
+* **Implementation Details:** In `game/game_engine.py`, introduced a lightweight `GroundParticle` class. When an anvil passes `anvil.is_off_screen(self.height)`, 8 dust puff / debris particles are generated at `(anvil.x + anvil.width // 2, ground_y)` before removing the anvil:
+  ```python
+  if anvil.is_off_screen(self.height):
+      impact_x = anvil.x + anvil.width // 2
+      for _ in range(8):
+          self.particles.append(GroundParticle(impact_x, ground_y))
+      self.anvils.remove(anvil)
+  ```
+* **Effect Behavior & Duration:**
+  * Each particle bursts upward/outward with randomized velocities and warm ground/dust colors.
+  * Particles shrink and fade over a brief lifetime of `10` to `16` frames (~0.2s).
+  * Expired particles are removed automatically from memory, and `self.particles.clear()` runs on `reset()`.
 
 ---
 
