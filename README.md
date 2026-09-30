@@ -42,9 +42,20 @@ python main.py
 
 Each task must be completed using an iterative process involving LLM suggestions and your critical code review.
 
-### Task 1: Fix the player off-screen boundary bug
+### Task 1: Fix the player off-screen boundary bug [COMPLETED]
 
 The player is supposed to stay inside the visible left and right boundaries of the screen. In the current build, player.update() has no boundary checks, allowing the player to walk indefinitely off the left or right edges of the screen where anvils cannot hit them, achieving infinite survival time. Implement horizontal bounds in player.update() so the player cannot step past 0 or self.screen_width - self.width.
+
+* **Bug (Before):** `Player.update()` in `game/player.py` contained only a `pass` statement. When the player moved left or right using `A`/`D` or the arrow keys, `self.x` had no upper or lower boundary constraints. As a result, the player could move completely off the screen (`x < 0` or `x > screen_width - width`), completely dodging falling anvils and achieving an infinite survival time exploit.
+* **Fix Implemented:** In `game/player.py`, implemented boundary clamping inside `Player.update()`:
+  ```python
+  def update(self):
+      if self.x < 0:
+          self.x = 0
+      elif self.x > self.screen_width - self.width:
+          self.x = self.screen_width - self.width
+  ```
+  This ensures `self.x` is strictly bounded between `0` (left screen boundary) and `self.screen_width - self.width` (right screen boundary, accounting for the player's 44px width), keeping the player sprite fully visible and within hazard range at all times.
 
 ### Task 2: Implement dynamic difficulty scaling
 
