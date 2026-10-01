@@ -126,16 +126,30 @@ anvil_dodge/
 │   ├── anvil.py
 │   ├── game_engine.py
 │   └── player.py
+├── videos/
+│   ├── before_gameplay.mp4   # 10-second video of gameplay BEFORE fixes (showing off-screen bug)
+│   └── after_gameplay.mp4    # 10-second video of gameplay AFTER fixes & features working
+├── CHAT_HISTORY.md           # Complete LLM conversation transcript & workflow diagram (Markdown)
+├── CHAT_HISTORY.pdf          # Complete LLM conversation transcript & workflow diagram (PDF)
 ├── main.py
 └── README.md
 ```
 
 ---
 
+## Gameplay Videos & Submission Artifacts
+
+| Artifact | File / Link | Description |
+| :--- | :--- | :--- |
+| **Gameplay Video (Before Fixes)** | [`videos/before_gameplay.mp4`](videos/before_gameplay.mp4) | 10-second recording demonstrating the bug (player walking off-screen to survive indefinitely). |
+| **Gameplay Video (After Fixes)** | [`videos/after_gameplay.mp4`](videos/after_gameplay.mp4) | 10-second recording demonstrating the boundary fix, dynamic difficulty, speed tinting, and impact effects. |
+| **LLM Chat History (PDF)** | [CHAT_HISTORY.pdf](CHAT_HISTORY.pdf) | Complete pair programming transcript formatted as a PDF document. |
+| **LLM Chat History (Markdown)** | [CHAT_HISTORY.md](CHAT_HISTORY.md) | Full workflow pipeline diagram and step-by-step dialogue record in Markdown. |
+
+---
+
 ## Submission Checklist
 
-Submission is only the following three things:
-
-- [ ] A 10-second video of gameplay **before** your changes, showing the bug/broken behavior
-- [ ] A 10-second video of gameplay **after** your changes, showing the bug fixed and the new features working
-- [x] The Chat/LLM used page link, with the complete chat history: See [CHAT_HISTORY.md](CHAT_HISTORY.md)
+- [x] **Gameplay Video (Before):** 10-second video of gameplay before changes showing the off-screen bug (`videos/before_gameplay.mp4`)
+- [x] **Gameplay Video (After):** 10-second video of gameplay after changes showing bug fix and all 3 features (`videos/after_gameplay.mp4`)
+- [x] **Chat/LLM History:** Complete chat history provided in [CHAT_HISTORY.pdf](CHAT_HISTORY.pdf) and [CHAT_HISTORY.md](CHAT_HISTORY.md)
