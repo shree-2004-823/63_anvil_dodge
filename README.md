@@ -127,8 +127,10 @@ anvil_dodge/
 │   ├── game_engine.py
 │   └── player.py
 ├── videos/
-│   ├── before_gameplay.mp4   # 10-second video of gameplay BEFORE fixes (showing off-screen bug)
-│   └── after_gameplay.mp4    # 10-second video of gameplay AFTER fixes & features working
+│   ├── before/
+│   │   └── before_gameplay.mp4   # 10-second video BEFORE fixes
+│   └── after/
+│       └── after_gameplay.mp4    # 10-second video AFTER fixes and features
 ├── CHAT_HISTORY.md           # Complete LLM conversation transcript & workflow diagram (Markdown)
 ├── CHAT_HISTORY.pdf          # Complete LLM conversation transcript & workflow diagram (PDF)
 ├── main.py
@@ -141,8 +143,8 @@ anvil_dodge/
 
 | Artifact | File / Link | Description |
 | :--- | :--- | :--- |
-| **Gameplay Video (Before Fixes)** | [`videos/before_gameplay.mp4`](videos/before_gameplay.mp4) | 10-second recording demonstrating the bug (player walking off-screen to survive indefinitely). |
-| **Gameplay Video (After Fixes)** | [`videos/after_gameplay.mp4`](videos/after_gameplay.mp4) | 10-second recording demonstrating the boundary fix, dynamic difficulty, speed tinting, and impact effects. |
+| **Gameplay Video (Before Fixes)** | [`videos/before/before_gameplay.mp4`](videos/before/before_gameplay.mp4) | 10-second recording demonstrating the bug (player walking off-screen to survive indefinitely). |
+| **Gameplay Video (After Fixes)** | [`videos/after/after_gameplay.mp4`](videos/after/after_gameplay.mp4) | 10-second recording demonstrating the boundary fix, dynamic difficulty, speed tinting, and impact effects. |
 | **LLM Chat History (PDF)** | [CHAT_HISTORY.pdf](CHAT_HISTORY.pdf) | Complete pair programming transcript formatted as a PDF document. |
 | **LLM Chat History (Markdown)** | [CHAT_HISTORY.md](CHAT_HISTORY.md) | Full workflow pipeline diagram and step-by-step dialogue record in Markdown. |
 
@@ -150,6 +152,17 @@ anvil_dodge/
 
 ## Submission Checklist
 
-- [x] **Gameplay Video (Before):** 10-second video of gameplay before changes showing the off-screen bug (`videos/before_gameplay.mp4`)
-- [x] **Gameplay Video (After):** 10-second video of gameplay after changes showing bug fix and all 3 features (`videos/after_gameplay.mp4`)
+- [x] **Gameplay Video (Before):** [View the before-fixes video](videos/before/before_gameplay.mp4)
+- [x] **Gameplay Video (After):** [View the after-fixes video](videos/after/after_gameplay.mp4)
 - [x] **Chat/LLM History:** Complete chat history provided in [CHAT_HISTORY.pdf](CHAT_HISTORY.pdf) and [CHAT_HISTORY.md](CHAT_HISTORY.md)
+
+### What Was Fixed and Implemented
+
+The original bug allowed the player to move past the left or right edge of the window. Once off-screen, the player could not be hit by falling anvils and could survive indefinitely.
+
+The following bug fix and features were implemented:
+
+1. **Player boundary fix:** The player's horizontal position is clamped between the left edge and the right edge of the screen.
+2. **Dynamic difficulty scaling:** The anvil spawn delay decreases as survival time increases, from 700 milliseconds down to a 200-millisecond minimum.
+3. **Speed-based anvil tinting:** Faster anvils use orange and red warning colors so dangerous hazards are easier to identify.
+4. **Ground impact effects:** Anvils create short-lived dust and debris particles when they hit the ground before being removed.
